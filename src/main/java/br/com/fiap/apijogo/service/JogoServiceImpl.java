@@ -2,6 +2,8 @@ package br.com.fiap.apijogo.service;
 
 import br.com.fiap.apijogo.entity.Jogo;
 import br.com.fiap.apijogo.repository.JogoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +11,11 @@ import java.util.List;
 @Service
 public class JogoServiceImpl implements JogoService {
     private final JogoRepository repository;
+    private final JogoRepository jogoRepository;
 
-    public JogoServiceImpl(JogoRepository repository) {
+    public JogoServiceImpl(JogoRepository repository, JogoRepository jogoRepository) {
         this.repository = repository;
+        this.jogoRepository = jogoRepository;
     }
 
     @Override
@@ -25,15 +29,12 @@ public class JogoServiceImpl implements JogoService {
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado"));
     }
 
-    @Override
-    public List<Jogo> listarTodos() {
-        return repository.findAll();
-    }
 
     @Override
-    public List<Jogo> buscarPorPlataforma(Long plataformaId) {
-        return repository.findByPlataformaId(plataformaId);
+    public Page<Jogo> listar(Pageable pageable) {
+        return jogoRepository.findAll(pageable);
     }
+
 
     @Override
     public Jogo atualizar(Long id, Jogo jogo) {

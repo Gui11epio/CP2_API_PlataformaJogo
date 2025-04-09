@@ -1,7 +1,6 @@
 package br.com.fiap.apijogo.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,4 +15,9 @@ public class PlataformaRequest {
     @NotNull(message = "A empresa é obrigatória")
     @Size(min = 1 , max = 1000)
     private String empresa;
+
+    @NotBlank
+    @DecimalMin(value = "1.000", message = "O valor mínimo é de 1000 reais")
+    @DecimalMax(value = "5.000", message = "O valor máximo é de 5000 reais")
+    private Double precoPlataforma;
 }

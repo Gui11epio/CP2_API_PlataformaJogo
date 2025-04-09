@@ -3,9 +3,10 @@ package br.com.fiap.apijogo.controller;
 import br.com.fiap.apijogo.entity.Plataforma;
 import br.com.fiap.apijogo.service.PlataformaService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/plataformas")
@@ -28,8 +29,8 @@ public class PlataformaController {
     }
 
     @GetMapping
-    public List<Plataforma> listarTodos() {
-        return service.listarTodos();
+    public ResponseEntity<Page<Plataforma>> listarP(Pageable pageable) {
+        return ResponseEntity.ok(service.listar(pageable));
     }
 
     @PutMapping("/{id}")

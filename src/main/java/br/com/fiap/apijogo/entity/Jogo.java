@@ -1,5 +1,6 @@
 package br.com.fiap.apijogo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class Jogo {
     private LocalDate dataLancamento;
     @ManyToOne
     @JoinColumn(name = "id_plataforma")
+    @JsonBackReference
     private Plataforma plataforma;
 
     public Jogo() {

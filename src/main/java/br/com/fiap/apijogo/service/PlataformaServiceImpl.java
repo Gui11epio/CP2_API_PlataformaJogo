@@ -2,6 +2,8 @@ package br.com.fiap.apijogo.service;
 
 import br.com.fiap.apijogo.entity.Plataforma;
 import br.com.fiap.apijogo.repository.PlataformaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.List;
 public class PlataformaServiceImpl implements PlataformaService {
 
     private final PlataformaRepository repository;
+    private final PlataformaRepository plataformaRepository;
 
-    public PlataformaServiceImpl(PlataformaRepository repository) {
+    public PlataformaServiceImpl(PlataformaRepository repository, PlataformaRepository plataformaRepository) {
         this.repository = repository;
+        this.plataformaRepository = plataformaRepository;
     }
 
     @Override
@@ -27,9 +31,10 @@ public class PlataformaServiceImpl implements PlataformaService {
     }
 
     @Override
-    public List<Plataforma> listarTodos() {
-        return repository.findAll();
+    public Page<Plataforma> listar(Pageable pageable) {
+        return plataformaRepository.findAll(pageable);
     }
+
 
     @Override
     public Plataforma atualizar(Long id, Plataforma plataforma) {

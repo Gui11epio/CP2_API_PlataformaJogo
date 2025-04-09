@@ -9,7 +9,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +41,7 @@ public class JogoController {
         return service.criar(jogo);
     }
 
-    @Operation(summary = "Retorna um cliente por ID")
+    @Operation(summary = "Retorna um jogo por ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Jogo encontrado com sucesso",
                     content = {@Content(mediaType = "application/json",
@@ -51,15 +54,9 @@ public class JogoController {
         return service.buscarPorId(id);
     }
 
-    @Operation(summary = "Listar todos os jogos")
     @GetMapping
-    public List<Jogo> listarTodos() {
-        return service.listarTodos();
-    }
-
-    @GetMapping("/plataforma/{plataformaId}")
-    public List<Jogo> buscarPorPlataforma(@PathVariable Long plataformaId) {
-        return service.buscarPorPlataforma(plataformaId);
+    public ResponseEntity<Page<Jogo>> listarJ(Pageable pageable) {
+        return ResponseEntity.ok(service.listar(pageable));
     }
 
     @Operation(summary = "Atualiza um jogo pelo Id")

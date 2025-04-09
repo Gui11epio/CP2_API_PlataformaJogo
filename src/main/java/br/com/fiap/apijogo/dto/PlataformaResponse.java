@@ -4,6 +4,7 @@ import org.springframework.hateoas.Link;
 
 public record PlataformaResponse(
         String nome,
-        String empresa
+        String empresa,
+        Double precoPlataforma
 ) {
 }

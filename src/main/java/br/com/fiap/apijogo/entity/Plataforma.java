@@ -1,5 +1,6 @@
 package br.com.fiap.apijogo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,7 +12,9 @@ public class Plataforma {
     private Long id;
     private String nome;
     private String empresa;
+    private Double precoPlataforma;
     @OneToMany(mappedBy = "plataforma")
+    @JsonManagedReference
     private List<Jogo> jogos;
 
     public Plataforma() {
@@ -21,6 +24,7 @@ public class Plataforma {
         this.id = id;
         this.nome = nome;
         this.empresa = empresa;
+        this.precoPlataforma = precoPlataforma;
         this.jogos = jogos;
     }
 
@@ -56,5 +60,11 @@ public class Plataforma {
         return id;
     }
 
+    public Double getPrecoPlataforma() {
+        return precoPlataforma;
+    }
 
+    public void setPrecoPlataforma(Double precoPlataforma) {
+        this.precoPlataforma = precoPlataforma;
+    }
 }
