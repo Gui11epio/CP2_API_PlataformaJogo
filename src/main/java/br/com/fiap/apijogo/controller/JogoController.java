@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jogo")
-@Tag(name = "JOGO")
+@Tag(name = "COMANDOS JOGO")
 public class JogoController {
     private final JogoService service;
 
@@ -54,12 +54,19 @@ public class JogoController {
         return service.buscarPorId(id);
     }
 
+    @Operation(summary = "Listar jogos por meio de páginas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Nenhum jogo encontrado",
+                    content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "200", description = "Jogo encontrado com sucesso",
+                    content = @Content(schema = @Schema()))
+    })
     @GetMapping
     public ResponseEntity<Page<Jogo>> listarJ(Pageable pageable) {
         return ResponseEntity.ok(service.listar(pageable));
     }
 
-    @Operation(summary = "Atualiza um jogo pelo Id")
+    @Operation(summary = "Atualiza um jogo pelo ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Jogo encontrado e atualizado com sucesso",
                     content = {@Content(mediaType = "application/json",

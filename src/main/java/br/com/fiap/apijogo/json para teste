@@ -1,0 +1,19 @@
+
+
+Jogo:
+{
+  "titulo": "God of War: Ragnarök",
+  "descricao": "A continuação da jornada de Kratos e Atreus",
+  "preco": 299.90,
+  "dataLancamento": "2022-11-09",
+  "plataforma": {
+    "id": 1
+  }
+}
+
+Plataforma:
+{
+  "nome": "Playstation 5",
+  "empresa": "Sony",
+  "precoPlataforma": 4500
+}
