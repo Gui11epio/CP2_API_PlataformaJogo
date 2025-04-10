@@ -4,16 +4,49 @@ Jogo:
 {
   "titulo": "God of War: Ragnarök",
   "descricao": "A continuação da jornada de Kratos e Atreus",
-  "preco": 299.90,
+  "preco": 349.90,
   "dataLancamento": "2022-11-09",
   "plataforma": {
     "id": 1
   }
 }
 
+{
+  "titulo": "Forza Horizon 5",
+  "descricao": "O quinto jogo da série Forza Horizon, dijira pelo México e explore!",
+  "preco": 200.0,
+  "dataLancamento": "2021-11-09",
+  "plataforma": {
+    "id": 2
+  }
+}
+
+{
+  "titulo": "The Legend Of Zelda - Tears Of The Kingdom",
+  "descricao": "Jogue a aclamada continuação de Breath of the Wild",
+  "preco": 349.90,
+  "dataLancamento": "2023-05-12",
+  "plataforma": {
+    "id": 3
+  }
+}
+
+
 Plataforma:
 {
   "nome": "Playstation 5",
   "empresa": "Sony",
-  "precoPlataforma": 4500
+  "precoPlataforma": 3500
+}
+
+{
+  "nome": "Xbox Series X",
+  "empresa": "Microsoft",
+  "precoPlataforma": 4000
+}
+
+{
+  "nome": "Nintendo Switch",
+  "empresa": "Nintendo",
+  "precoPlataforma": 2000
 }
