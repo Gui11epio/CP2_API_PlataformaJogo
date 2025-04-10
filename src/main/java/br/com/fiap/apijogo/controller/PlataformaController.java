@@ -10,11 +10,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/plataformas")
@@ -49,7 +58,7 @@ public class PlataformaController {
                     content = @Content(schema = @Schema()))
     })
     @GetMapping("/{id}")
-    public Plataforma buscarPorId(@PathVariable Long id) {
+    public Plataforma buscarPorId(@PathVariable("id") Long id) {
         return service.buscarPorId(id);
     }
 
@@ -61,8 +70,34 @@ public class PlataformaController {
                     content = @Content(schema = @Schema()))
     })
     @GetMapping
-    public ResponseEntity<Page<Plataforma>> listarP(Pageable pageable) {
-        return ResponseEntity.ok(service.listar(pageable));
+    public ResponseEntity<CollectionModel<EntityModel<Plataforma>>> listarP(Pageable pageable) {
+        Page<Plataforma> page = service.listar(pageable);
+
+        List<Plataforma> plataformas = page.getContent();
+
+        List<EntityModel<Plataforma>> plataformasComLinks = new ArrayList<>();
+
+        for (int i = 0; i < plataformas.size(); i++) {
+            Plataforma atual = plataformas.get(i);
+
+            EntityModel<Plataforma> model = EntityModel.of(atual,
+                    linkTo(methodOn(PlataformaController.class).buscarPorId(atual.getId())).withSelfRel()
+            );
+
+            // Se houver próxima plataforma na mesma página
+            if (i + 1 < plataformas.size()) {
+                Plataforma proxima = plataformas.get(i + 1);
+                model.add(linkTo(methodOn(PlataformaController.class)
+                        .buscarPorId(proxima.getId())).withRel("next"));
+            }
+
+            plataformasComLinks.add(model);
+        }
+
+        CollectionModel<EntityModel<Plataforma>> collectionModel =
+                CollectionModel.of(plataformasComLinks);
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @Operation(summary = "Atualiza uma plataforma pelo ID")

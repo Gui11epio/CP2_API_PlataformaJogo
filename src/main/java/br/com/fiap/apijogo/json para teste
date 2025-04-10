@@ -50,3 +50,12 @@ Plataforma:
   "empresa": "Nintendo",
   "precoPlataforma": 2000
 }
+
+Para o GET:
+{
+  "page": 0,
+  "size": 5,
+  "sort": [
+    "id,asc"
+  ]
+}

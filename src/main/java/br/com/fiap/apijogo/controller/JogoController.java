@@ -11,11 +11,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/jogo")
@@ -50,7 +57,7 @@ public class JogoController {
                     content = @Content(schema = @Schema()))
     })
     @GetMapping("/{id}")
-    public Jogo buscarPorId(@PathVariable Long id) {
+    public Jogo buscarPorId(@PathVariable("id") Long id) {
         return service.buscarPorId(id);
     }
 
@@ -62,8 +69,34 @@ public class JogoController {
                     content = @Content(schema = @Schema()))
     })
     @GetMapping
-    public ResponseEntity<Page<Jogo>> listarJ(Pageable pageable) {
-        return ResponseEntity.ok(service.listar(pageable));
+    public ResponseEntity<CollectionModel<EntityModel<Jogo>>> listarP(Pageable pageable) {
+        Page<Jogo> page = service.listar(pageable);
+
+        List<Jogo> jogos = page.getContent();
+
+        List<EntityModel<Jogo>> jogosComLinks = new ArrayList<>();
+
+        for (int i = 0; i < jogos.size(); i++) {
+            Jogo atual = jogos.get(i);
+
+            EntityModel<Jogo> model = EntityModel.of(atual,
+                    linkTo(methodOn(PlataformaController.class).buscarPorId(atual.getId())).withSelfRel()
+            );
+
+            // Se houver próxima plataforma na mesma página
+            if (i + 1 < jogos.size()) {
+                Jogo proxima = jogos.get(i + 1);
+                model.add(linkTo(methodOn(PlataformaController.class)
+                        .buscarPorId(proxima.getId())).withRel("next"));
+            }
+
+            jogosComLinks.add(model);
+        }
+
+        CollectionModel<EntityModel<Jogo>> collectionModel =
+                CollectionModel.of(jogosComLinks);
+
+        return ResponseEntity.ok(collectionModel);
     }
 
     @Operation(summary = "Atualiza um jogo pelo ID")
