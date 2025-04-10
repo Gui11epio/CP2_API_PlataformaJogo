@@ -1,4 +1,21 @@
+Plataforma:
+{
+  "nome": "Playstation 5",
+  "empresa": "Sony",
+  "precoPlataforma": 3500
+}
 
+{
+  "nome": "Xbox Series X",
+  "empresa": "Microsoft",
+  "precoPlataforma": 4000
+}
+
+{
+  "nome": "Nintendo Switch",
+  "empresa": "Nintendo",
+  "precoPlataforma": 2000
+}
 
 Jogo:
 {
@@ -31,25 +48,6 @@ Jogo:
   }
 }
 
-
-Plataforma:
-{
-  "nome": "Playstation 5",
-  "empresa": "Sony",
-  "precoPlataforma": 3500
-}
-
-{
-  "nome": "Xbox Series X",
-  "empresa": "Microsoft",
-  "precoPlataforma": 4000
-}
-
-{
-  "nome": "Nintendo Switch",
-  "empresa": "Nintendo",
-  "precoPlataforma": 2000
-}
 
 Para o GET:
 {

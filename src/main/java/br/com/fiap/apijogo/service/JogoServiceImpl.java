@@ -13,12 +13,10 @@ import java.util.List;
 public class JogoServiceImpl implements JogoService {
 
     private final JogoRepository jogoRepository;
-    private final PlataformaRepository plataformaRepository;
 
-    public JogoServiceImpl(JogoRepository repository, JogoRepository jogoRepository, PlataformaRepository plataformaRepository) {
+    public JogoServiceImpl(JogoRepository repository, JogoRepository jogoRepository) {
 
         this.jogoRepository = jogoRepository;
-        this.plataformaRepository = plataformaRepository;
     }
 
     @Override
@@ -54,4 +52,5 @@ public class JogoServiceImpl implements JogoService {
         Jogo jogo = buscarPorId(id);
         jogoRepository.delete(jogo);
     }
+
 }
