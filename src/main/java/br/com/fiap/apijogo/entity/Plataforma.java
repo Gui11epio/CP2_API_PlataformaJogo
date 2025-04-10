@@ -28,6 +28,9 @@ public class Plataforma {
         this.jogos = jogos;
     }
 
+    public Plataforma(Long id, String nome, String empresa, Double precoPlataforma) {
+    }
+
     public String getNome() {
         return nome;
     }

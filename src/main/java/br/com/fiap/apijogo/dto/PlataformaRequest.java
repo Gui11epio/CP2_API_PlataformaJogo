@@ -1,5 +1,6 @@
 package br.com.fiap.apijogo.dto;
 
+import br.com.fiap.apijogo.entity.Plataforma;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,8 @@ public class PlataformaRequest {
     @DecimalMin(value = "1.000", message = "O valor mínimo é de 1000 reais")
     @DecimalMax(value = "5.000", message = "O valor máximo é de 5000 reais")
     private Double precoPlataforma;
+
+    public Plataforma toEntity() {
+        return new Plataforma(null, nome, empresa, precoPlataforma);
+    }
 }

@@ -101,7 +101,7 @@ public class JogoController {
 
     @Operation(summary = "Atualiza um jogo pelo ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Jogo encontrado e atualizado com sucesso",
+            @ApiResponse(responseCode = "200", description = "Jogo encontrado e atualizado com sucesso",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Jogo.class))}),
             @ApiResponse(responseCode = "400", description = "Nenhum jogo encontrado para atualizar",

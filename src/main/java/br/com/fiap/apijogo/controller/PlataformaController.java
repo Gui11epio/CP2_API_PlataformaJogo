@@ -102,7 +102,7 @@ public class PlataformaController {
 
     @Operation(summary = "Atualiza uma plataforma pelo ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Plataforma encontrada e atualizada com sucesso",
+            @ApiResponse(responseCode = "200", description = "Plataforma encontrada e atualizada com sucesso",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Jogo.class))}),
             @ApiResponse(responseCode = "400", description = "Nenhuma plataforma encontrada para atualizar",

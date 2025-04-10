@@ -1,5 +1,7 @@
 package br.com.fiap.apijogo.dto;
 
+import br.com.fiap.apijogo.entity.Jogo;
+import br.com.fiap.apijogo.entity.Plataforma;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +28,11 @@ public class JogoRequest {
     private LocalDate dataLancamento;
 
     private Long plataformaId;
+
+    public Jogo toEntity(Plataforma plataforma) {
+        return new Jogo(null, titulo, descricao, preco, dataLancamento, plataforma);
+    }
+
+
 
 }

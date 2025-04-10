@@ -34,6 +34,9 @@ public class Jogo {
         this.dataLancamento = dataLancamento;
     }
 
+    public Jogo(Object o, String titulo, String descricao, Double preco, LocalDate dataLancamento, Plataforma plataforma) {
+    }
+
     public Long getId() {
         return id;
     }
