@@ -1,3 +1,10 @@
+Pedro Manzo Yokoo/ 556115 
+
+Fernando Fernandes Prado /557982 
+
+Guilherme Camasmie Laiber de Jesus/554894  
+
+
 == COMO USAR ==
 =
 1- No cmd faça um clone do projeto usando:
