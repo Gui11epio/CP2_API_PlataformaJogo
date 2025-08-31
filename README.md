@@ -1,59 +1,68 @@
-Pedro Manzo Yokoo/ 556115 
+# 📌 CP2 - API Plataforma de Jogos
+👨‍💻 Integrantes
 
-Fernando Fernandes Prado /557982 
+Pedro Manzo Yokoo – RM: 556115
 
-Guilherme Camasmie Laiber de Jesus/554894  
+Fernando Fernandes Prado – RM: 557982
 
+Guilherme Camasmie Laiber de Jesus – RM: 554894
 
-== COMO USAR ==
-=
-1- No cmd faça um clone do projeto usando:
-=
-"git clone https://github.com/Gui11epio/CP2_API_PlataformaJogo.git"
+## ⚙️ Como Usar:
 
-2- Entre no projeto usando o comado:
-=
-"cd CP2_API_PlataformaJogo"
+1️⃣ Clone do projeto
+```bash
+  git clone https://github.com/Gui11epio/CP2_API_PlataformaJogo.git
+```
 
-3- Faça o build da imagem da app e subida dos serviços:
-=
-"docker compose up -d --build"
+2️⃣ Acesse a pasta
+```bash
+  cd CP2_API_PlataformaJogo
+```
 
-4- Verificar status/health:
-=
+3️⃣ Build e subida dos serviços
+```bash
+  docker compose up -d --build
+```
+
+4️⃣ Verificar status/health
+```bash
 docker compose ps
 docker compose logs -f db
 docker compose logs -f app
+```
 
-5- Testar a API
-=
-link do swagge:
+5️⃣ Testar a API
+
+Acesse o Swagger no navegador:
+```bash
 http://localhost:8080/swagger-ui/index.html#/
+```
 
-Para o POST:
-=
-Plataforma:
-
+## 📂 Exemplos de Requisições
+➕ Criar Plataforma (POST /plataformas)
+```bash
 {
   "nome": "Playstation 5",
   "empresa": "Sony",
   "precoPlataforma": 3500
 }
-
+```
+```bash
 {
   "nome": "Xbox Series X",
   "empresa": "Microsoft",
   "precoPlataforma": 4000
 }
-
+```
+```bash
 {
   "nome": "Nintendo Switch",
   "empresa": "Nintendo",
   "precoPlataforma": 2000
 }
-
-Jogo:
-
+```
+➕ Criar Jogo (POST /jogos)
+```bash
 {
   "titulo": "Uncharted 4",
   "descricao": "Um jogo de ação, aventura e exploração. uma franquia ganhadora do GOTY",
@@ -63,7 +72,8 @@ Jogo:
     "id": 1
   }
 }
-
+```
+```bash
 {
   "titulo": "Forza Horizon 5",
   "descricao": "O quinto jogo da série Forza Horizon, dijira pelo México e explore!",
@@ -73,7 +83,8 @@ Jogo:
     "id": 2
   }
 }
-
+```
+```bash
 {
   "titulo": "The Legend Of Zelda - Tears Of The Kingdom",
   "descricao": "Jogue a aclamada continuação de Breath of the Wild",
@@ -83,10 +94,10 @@ Jogo:
     "id": 3
   }
 }
+```
 
-
-Para o GET:
-=
+🔍 Buscar Jogos/Páginas (GET /jogos)
+```bash
 {
   "page": 0,
   "size": 5,
@@ -94,76 +105,64 @@ Para o GET:
     "id,asc"
   ]
 }
+```
 
-Para o atualizar e deletar:
-=
--É só usar outro exemplo que foi colocado
+✏️ Atualizar & ❌ Deletar
 
- =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/
-== ANALISE DA ARQUITETURA ==
-=
-1. Os serviços do projeto
-Os serviços principais são:
+Use os exemplos acima alterando os valores ou IDs conforme necessário.
 
-Spring Boot App → aplicação backend.
+## 🏗️ Análise da Arquitetura
+1. Serviços do Projeto
 
-MySQL → banco de dados usado pela aplicação.
-2. Mapeie as dependências entre os serviços (0,4 pontos)
+- Spring Boot App → aplicação backend
 
-Como eles se conectam:
+- MySQL → banco de dados usado pela aplicação
 
-O Spring Boot depende do MySQL para armazenar e buscar dados.
+2. Dependências entre os serviços
 
-O MySQL é independente, mas precisa estar pronto antes do app iniciar.
+- O Spring Boot depende do MySQL para armazenar e buscar dados.
 
-Ambos os serviços se comunicam pela rede Docker interna (backend).
+- O MySQL é independente, mas precisa estar pronto antes do app iniciar.
 
- Exemplo de mapeamento:
+- Comunicação via rede Docker interna (backend).
 
-Cliente → envia requisições HTTP (porta 8080) → Spring Boot
+📌 Exemplo do fluxo:
 
-Spring Boot → JDBC (porta 3306) → MySQL
+- Cliente → (HTTP porta 8080) → Spring Boot  
+- Spring Boot → (JDBC porta 3306) → MySQL
 
-3. Estratégia de containerização para cada componente
+3. Estratégia de Containerização
 
-como vai rodar cada parte no Docker:
+- Spring Boot (App)
 
-Spring Boot (App)
+- Imagem customizada via Dockerfile
 
-Cria uma imagem customizada via Dockerfile
+- Usuário não root
 
-Usa usuário não root.
+- Porta exposta: 8080
 
-Expoe porta 8080.
+- Variáveis de ambiente para conexão com MySQL
 
-Configura variáveis de ambiente para conectar ao MySQL.
+- MySQL
 
-MySQL
+- Imagem oficial mysql:8.0
 
-Usa imagem oficial do Docker Hub (mysql:8.0).
+- Volume para persistência (mysql_data)
 
-Monta volume para persistência dos dados (mysql_data).
+- Configuração via .env (usuário, senha, database)
 
-Configura variáveis de ambiente no .env (usuário, senha, database).
+- Porta exposta: 3306
 
-Expor porta 3306.
+✅ Resumo:
 
-Resumindo:
+- Serviços → App + MySQL
 
-Serviços → App + MySQL
+- Dependências → App depende do MySQL
 
-Dependências → App depende do MySQL
+Estratégia → App (imagem custom) + MySQL (imagem oficial com volume)
 
-Estratégia → App com imagem custom, MySQL com imagem oficial e volume
-
-=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/
-== ARQUITETURA DO PROJETO ==
-=
-
-== AQUITETURA ANTIGA ==
-=
+🖼️ Arquitetura do Projeto
+Arquitetura Antiga
 <img width="1536" height="1024" alt="arquitetura antiga" src="https://github.com/user-attachments/assets/cb537433-25a1-4df3-8fcb-0788c6673a32" />
-
-== ARQUITETURA ATUAL ==
-=
+Arquitetura Atual
 <img width="1536" height="1024" alt="arquitetura atual" src="https://github.com/user-attachments/assets/c340dd21-6714-47d5-a06e-324d28f039b9" />
